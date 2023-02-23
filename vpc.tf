@@ -49,3 +49,12 @@ resource "aws_subnet" "private_subnet2" {
     Name = "terraform-chs-private-subnet2"
   }
 }
+
+resource "aws_internet_gateway" "igw-chs" {
+  vpc_id = aws_vpc.terraform-chs.id
+
+  tags = {
+    "name" = "igw-chs"
+  }
+  
+}
