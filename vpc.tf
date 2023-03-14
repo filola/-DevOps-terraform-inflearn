@@ -57,4 +57,23 @@ resource "aws_internet_gateway" "igw-chs" {
     "name" = "igw-chs"
   }
   
+} 
+
+resource "aws_eip" "natgateway_1" {
+  vpc = true
+
+  lifecycle {
+     create_before_destroy =  true
+  }
+}
+
+resource "aws_nat_gateway" "nat_gateway_1" {
+  allocation_id = aws_eip.natgateway_1.id
+  
+  # Private subnet이 아니라 public subnet을 연결
+  subnet_id = aws_subnet.public_subnet1.id
+
+  tags = {
+    "Name" = "NAT-GW-1"
+  }
 }
